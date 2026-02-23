@@ -182,7 +182,7 @@ $(function(){
     gsap.to( $cursor, {
      scale:1,
      opacity:.6
-    }) 
+    })
   }
   $(window).on('mousemove',cursormover);
   $('.menubar').hover(cursorhover,cursor);
