@@ -1374,9 +1374,19 @@ For devices with smaller width like mobile phone
         display: none;
     }
     .header-image{
-        float: right;
-        height: auto;
-        width: 0%;   
+        float: none;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .header-image img{
+        float: none;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        object-position: center center;
     }
     .social-media-links{
         width: 100%;
