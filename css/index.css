@@ -43,10 +43,6 @@ input[type=number] {
     background: #101010;
     
   }
-  :root{
-    --bg-cursor-x: 50%;
-    --bg-cursor-y: 50%;
-  }
   #loader{
       display: flex;
       align-items: center;
@@ -82,10 +78,10 @@ body{
     top: 0;
     left: 0;
     height: 100%;
-    width: 100vw;
-    background:
-      radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(210, 42, 24, .16), rgba(210, 42, 24, 0) 44rem),
-      linear-gradient(#171717, #171717);
+    width: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(#171717, #171717);
     background-size: cover;
     background-position: center;
     opacity: 1;
@@ -98,18 +94,38 @@ body{
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(to right, rgba(255, 78, 44, .08) 0 1px, transparent 1px 7px),
-      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .08) 0 1px, transparent 1px 7px);
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .12) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .12) 0 1px, transparent 1px 8px);
     opacity: .22;
     pointer-events: none;
 }
 #particles::after{
     content: "";
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(255, 82, 45, .12), rgba(255, 82, 45, 0) 22rem);
-    filter: blur(20px);
+    inset: -12%;
     pointer-events: none;
+    opacity: .22;
+    background:
+      radial-gradient(36rem 36rem at 18% 28%, rgba(198, 156, 45, .10), rgba(198, 156, 45, 0) 70%),
+      radial-gradient(30rem 30rem at 78% 72%, rgba(255, 120, 82, .08), rgba(255, 120, 82, 0) 72%);
+    filter: blur(24px);
+    animation: ambientDrift 26s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+}
+@keyframes ambientDrift{
+    0%{
+        transform: translate3d(-2%, -1%, 0) scale(1);
+        opacity: .18;
+    }
+    100%{
+        transform: translate3d(2%, 1.5%, 0) scale(1.04);
+        opacity: .24;
+    }
+}
+@media (prefers-reduced-motion: reduce){
+    #particles::after{
+        animation: none;
+    }
 }
 #navigation-content{
     height: 100vh;
@@ -304,6 +320,7 @@ body{
 .header-image img{
     height: 100vh;
     float: right;
+    filter: brightness(.86);
 }
 .header-image{
     float: right;
@@ -517,9 +534,8 @@ body{
 }
 #about{
     background:
-      radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(210, 42, 24, .12), rgba(210, 42, 24, 0) 42rem),
-      repeating-linear-gradient(to right, rgba(255, 78, 44, .06) 0 1px, transparent 1px 7px),
-      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .06) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .1) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .1) 0 1px, transparent 1px 8px),
       linear-gradient(#101010, #101010);
     display: none;
     width: 100%;
@@ -1037,8 +1053,8 @@ padding-bottom: 40px;
     background: transparent;
     pointer-events: none;
     position: fixed;
-    top: -25px;
-    left: -25px;
+    top: 0;
+    left: 0;
     z-index: 10;
     opacity: .6;
     transition:  scale .5s ease;
