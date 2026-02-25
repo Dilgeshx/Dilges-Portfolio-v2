@@ -162,7 +162,9 @@ gsap.to('#navigation-content',0,{display:'flex',delay:2});
 })
 $(function(){
  var body =  document.querySelector('body');
+ var root = document.documentElement;
  var header = document.getElementById('header');
+ var about = document.getElementById('about');
  var $cursor = $('.cursor')
  var bgCurrentX = 50;
  var bgCurrentY = 50;
@@ -173,11 +175,16 @@ $(function(){
    function animateBackground(){
     bgCurrentX += (bgTargetX - bgCurrentX) * bgEase;
     bgCurrentY += (bgTargetY - bgCurrentY) * bgEase;
-    if(header){
-      header.style.setProperty('--bg-cursor-x', bgCurrentX + '%');
-      header.style.setProperty('--bg-cursor-y', bgCurrentY + '%');
-    }
+    root.style.setProperty('--bg-cursor-x', bgCurrentX + '%');
+    root.style.setProperty('--bg-cursor-y', bgCurrentY + '%');
     requestAnimationFrame(animateBackground);
+   }
+
+   function getActiveSurface(){
+    if(about && window.getComputedStyle(about).display !== 'none'){
+      return about;
+    }
+    return header || document.body;
    }
 
    function cursormover(e){
@@ -187,13 +194,14 @@ $(function(){
       y : e.clientY,
       stagger:.002
      })
-    if(header){
-      var rect = header.getBoundingClientRect();
-      if(rect.width > 0 && rect.height > 0){
-        bgTargetX = ((e.clientX - rect.left) / rect.width) * 100;
-        bgTargetY = ((e.clientY - rect.top) / rect.height) * 100;
-      }
-    }
+    var surface = getActiveSurface();
+    var rect = surface.getBoundingClientRect();
+    var width = rect.width || 1;
+    var height = rect.height || 1;
+    bgTargetX = ((e.clientX - rect.left) / width) * 100;
+    bgTargetY = ((e.clientY - rect.top) / height) * 100;
+    bgTargetX = Math.max(0, Math.min(100, bgTargetX));
+    bgTargetY = Math.max(0, Math.min(100, bgTargetY));
    }
    function cursorhover(e){
     gsap.to( $cursor,{

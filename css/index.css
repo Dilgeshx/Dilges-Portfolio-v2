@@ -443,7 +443,11 @@ body{
     transition: all .4s ease;
 }
 #about{
-    background-color: #101010;
+    background:
+      radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(210, 42, 24, .12), rgba(210, 42, 24, 0) 42rem),
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .06) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .06) 0 1px, transparent 1px 7px),
+      linear-gradient(#101010, #101010);
     display: none;
     width: 100%;
     height: auto;
