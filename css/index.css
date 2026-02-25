@@ -42,6 +42,10 @@ input[type=number] {
     background: #101010;
     
   }
+  :root{
+    --bg-cursor-x: 50%;
+    --bg-cursor-y: 50%;
+  }
   #loader{
       display: flex;
       align-items: center;
@@ -78,9 +82,31 @@ body{
     left: 0;
     height: 100%;
     width: 100vw;
+    background:
+      radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(210, 42, 24, .16), rgba(210, 42, 24, 0) 44rem),
+      linear-gradient(#171717, #171717);
     background-size: cover;
-    background-position: 50% 50%;
+    background-position: center;
+    opacity: 1;
     display: block;
+    pointer-events: none;
+    z-index: 0;
+}
+#particles::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .08) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .08) 0 1px, transparent 1px 7px);
+    opacity: .22;
+}
+#particles::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(255, 82, 45, .12), rgba(255, 82, 45, 0) 22rem);
+    filter: blur(20px);
 }
 #navigation-content{
     height: 100vh;
@@ -233,6 +259,8 @@ body{
     background-position: center;
     width: 40%;   
     height: 100vh;
+    position: relative;
+    z-index: 1;
 
 }
 .header-content{

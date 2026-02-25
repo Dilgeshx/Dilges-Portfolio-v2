@@ -162,7 +162,24 @@ gsap.to('#navigation-content',0,{display:'flex',delay:2});
 })
 $(function(){
  var body =  document.querySelector('body');
+ var header = document.getElementById('header');
  var $cursor = $('.cursor')
+ var bgCurrentX = 50;
+ var bgCurrentY = 50;
+ var bgTargetX = 50;
+ var bgTargetY = 50;
+ var bgEase = 0.06;
+
+   function animateBackground(){
+    bgCurrentX += (bgTargetX - bgCurrentX) * bgEase;
+    bgCurrentY += (bgTargetY - bgCurrentY) * bgEase;
+    if(header){
+      header.style.setProperty('--bg-cursor-x', bgCurrentX + '%');
+      header.style.setProperty('--bg-cursor-y', bgCurrentY + '%');
+    }
+    requestAnimationFrame(animateBackground);
+   }
+
    function cursormover(e){
     
     gsap.to( $cursor, {
@@ -170,6 +187,13 @@ $(function(){
       y : e.clientY,
       stagger:.002
      })
+    if(header){
+      var rect = header.getBoundingClientRect();
+      if(rect.width > 0 && rect.height > 0){
+        bgTargetX = ((e.clientX - rect.left) / rect.width) * 100;
+        bgTargetY = ((e.clientY - rect.top) / rect.height) * 100;
+      }
+    }
    }
    function cursorhover(e){
     gsap.to( $cursor,{
@@ -185,6 +209,7 @@ $(function(){
     })
   }
   $(window).on('mousemove',cursormover);
+  animateBackground();
   $('.menubar').hover(cursorhover,cursor);
   $('a').hover(cursorhover,cursor);
   $('.navigation-close').hover(cursorhover,cursor);
