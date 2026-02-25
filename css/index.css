@@ -98,17 +98,21 @@ body{
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(to right, rgba(255, 78, 44, .08) 0 1px, transparent 1px 7px),
-      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .08) 0 1px, transparent 1px 7px);
-    opacity: .22;
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .18) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .18) 0 1px, transparent 1px 8px);
+    opacity: .3;
     pointer-events: none;
 }
 #particles::after{
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(255, 82, 45, .12), rgba(255, 82, 45, 0) 22rem);
-    filter: blur(20px);
+    background:
+      radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(255, 88, 48, .14), rgba(255, 88, 48, .05) 16rem, rgba(255, 88, 48, 0) 30rem),
+      radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(255, 120, 82, .08), rgba(255, 120, 82, 0) 42rem);
+    filter: blur(26px);
+    transition: background .22s ease-out, filter .28s ease-out;
+    will-change: background, filter;
     pointer-events: none;
 }
 #navigation-content{
@@ -304,6 +308,7 @@ body{
 .header-image img{
     height: 100vh;
     float: right;
+    filter: brightness(.86);
 }
 .header-image{
     float: right;
@@ -518,8 +523,8 @@ body{
 #about{
     background:
       radial-gradient(circle at var(--bg-cursor-x) var(--bg-cursor-y), rgba(210, 42, 24, .12), rgba(210, 42, 24, 0) 42rem),
-      repeating-linear-gradient(to right, rgba(255, 78, 44, .06) 0 1px, transparent 1px 7px),
-      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .06) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .14) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .14) 0 1px, transparent 1px 8px),
       linear-gradient(#101010, #101010);
     display: none;
     width: 100%;
