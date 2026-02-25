@@ -8,6 +8,10 @@
 @import url('https://fonts.googleapis.com/css?family=Monoton&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Poppins:500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{
+    --bg-cursor-x: 50%;
+    --bg-cursor-y: 50%;
+}
 *{
     padding: 0%;
     margin: 0%;
@@ -103,14 +107,17 @@ body{
     content: "";
     position: absolute;
     inset: -12%;
-    pointer-events: none;
-    opacity: .22;
     background:
+      radial-gradient(circle at var(--bg-cursor-x, 50%) var(--bg-cursor-y, 50%), rgba(255, 88, 48, .14), rgba(255, 88, 48, .05) 16rem, rgba(255, 88, 48, 0) 30rem),
+      radial-gradient(circle at var(--bg-cursor-x, 50%) var(--bg-cursor-y, 50%), rgba(255, 120, 82, .08), rgba(255, 120, 82, 0) 42rem),
       radial-gradient(36rem 36rem at 18% 28%, rgba(198, 156, 45, .10), rgba(198, 156, 45, 0) 70%),
       radial-gradient(30rem 30rem at 78% 72%, rgba(255, 120, 82, .08), rgba(255, 120, 82, 0) 72%);
+    pointer-events: none;
+    opacity: .22;
     filter: blur(24px);
+    transition: background .22s ease-out, filter .28s ease-out;
     animation: ambientDrift 26s ease-in-out infinite alternate;
-    will-change: transform, opacity;
+    will-change: transform, opacity, background, filter;
 }
 @keyframes ambientDrift{
     0%{
@@ -534,8 +541,9 @@ body{
 }
 #about{
     background:
-      repeating-linear-gradient(to right, rgba(255, 78, 44, .1) 0 1px, transparent 1px 8px),
-      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .1) 0 1px, transparent 1px 8px),
+      radial-gradient(circle at var(--bg-cursor-x, 50%) var(--bg-cursor-y, 50%), rgba(210, 42, 24, .12), rgba(210, 42, 24, 0) 42rem),
+      repeating-linear-gradient(to right, rgba(255, 78, 44, .14) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(to bottom, rgba(255, 78, 44, .14) 0 1px, transparent 1px 8px),
       linear-gradient(#101010, #101010);
     display: none;
     width: 100%;

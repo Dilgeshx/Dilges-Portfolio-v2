@@ -190,6 +190,8 @@ $(function(){
       x: e.clientX,
       y: e.clientY
     });
+    document.documentElement.style.setProperty('--bg-cursor-x', e.clientX + 'px');
+    document.documentElement.style.setProperty('--bg-cursor-y', e.clientY + 'px');
    }
    function cursorhover(e){
     gsap.to( $cursor,{
