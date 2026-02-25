@@ -94,7 +94,6 @@ $(function(){
         $('#home-link').addClass('active');
       }
     }
-
     setActiveTopNav('home');
 
     $('#about-link').on('click',function(e){
