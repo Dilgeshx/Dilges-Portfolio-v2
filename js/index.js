@@ -308,5 +308,3 @@ $(function(){
     setTimeout(scrambleToName, 920);
   });
 });
-
-
