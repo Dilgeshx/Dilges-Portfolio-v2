@@ -308,3 +308,79 @@ $(function(){
     setTimeout(scrambleToName, 920);
   });
 });
+
+$(function(){
+  var $dock = $('#music-dock');
+  var $audio = $('#site-audio');
+  var $cover = $('#music-cover');
+  var $title = $('#music-now-title');
+  var $play = $('#music-play');
+  if(!$dock.length || !$audio.length || !$play.length){
+    return;
+  }
+  if(!$dock.parent().is('body')){
+    $dock.appendTo('body');
+  }
+  $dock.css('display', 'flex');
+
+  var playlist = [
+    { title: 'The Voidz - Lazy Boy', src: 'audio/track-1.mp3', cover: 'images/lazy-boy-cover.png' }
+  ];
+  var defaultVolume = 0.22;
+  var current = 0;
+  var unlocked = false;
+
+  function syncState(){
+    $play.text($audio[0].paused ? '>' : '||');
+    $dock.toggleClass('playing', !$audio[0].paused);
+  }
+  function loadTrack(index){
+    if(!playlist.length){
+      $title.text('No track selected');
+      return;
+    }
+    current = (index + playlist.length) % playlist.length;
+    $audio.attr('src', playlist[current].src);
+    $title.text(playlist[current].title);
+    $cover.attr('src', playlist[current].cover || 'images/lazy-boy-cover.png');
+  }
+  function tryPlay(){
+    $audio[0].play().then(function(){
+      unlocked = true;
+      syncState();
+    }).catch(function(){
+      syncState();
+    });
+  }
+
+  loadTrack(0);
+  $audio[0].volume = defaultVolume;
+  syncState();
+
+  $play.on('click', function(){
+    if($audio[0].paused){
+      tryPlay();
+    }else{
+      $audio[0].pause();
+    }
+  });
+  $audio.on('ended', function(){
+    loadTrack(current + 1);
+    tryPlay();
+  });
+  $audio.on('play pause', syncState);
+
+  $play.hover(
+    function(){ gsap.to($('.cursor'), { scale: 1.25, opacity: 1 }); },
+    function(){ gsap.to($('.cursor'), { scale: 1, opacity: .6 }); }
+  );
+
+  $(window).on('load', function(){
+    setTimeout(tryPlay, 450);
+  });
+  $(document).one('pointerdown keydown touchstart', function(){
+    if(!unlocked && $audio[0].paused){
+      tryPlay();
+    }
+  });
+});
