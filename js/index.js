@@ -183,6 +183,12 @@ $('#home-link-menu').on('click',function(e){
 })
 $(function(){
  var $cursor = $('.cursor')
+  var root = document.documentElement;
+  var pointerX = window.innerWidth * 0.5;
+  var pointerY = window.innerHeight * 0.5;
+  var bgX = pointerX;
+  var bgY = pointerY;
+  var bgTicking = false;
 
    function cursormover(e){
 
@@ -190,8 +196,25 @@ $(function(){
       x: e.clientX,
       y: e.clientY
     });
-    document.documentElement.style.setProperty('--bg-cursor-x', e.clientX + 'px');
-    document.documentElement.style.setProperty('--bg-cursor-y', e.clientY + 'px');
+    pointerX = e.clientX;
+    pointerY = e.clientY;
+    if(!bgTicking){
+      bgTicking = true;
+      requestAnimationFrame(updateBackgroundCursor);
+    }
+   }
+   function updateBackgroundCursor(){
+    // Smoothly lerp the glow position to create a subtle delayed follow.
+    bgX += (pointerX - bgX) * 0.085;
+    bgY += (pointerY - bgY) * 0.085;
+    root.style.setProperty('--bg-cursor-x', bgX + 'px');
+    root.style.setProperty('--bg-cursor-y', bgY + 'px');
+
+    if(Math.abs(pointerX - bgX) > 0.1 || Math.abs(pointerY - bgY) > 0.1){
+      requestAnimationFrame(updateBackgroundCursor);
+      return;
+    }
+    bgTicking = false;
    }
    function cursorhover(e){
     gsap.to( $cursor,{
@@ -208,6 +231,8 @@ $(function(){
   }
 
   gsap.set($cursor, { xPercent: -50, yPercent: -50 });
+  root.style.setProperty('--bg-cursor-x', bgX + 'px');
+  root.style.setProperty('--bg-cursor-y', bgY + 'px');
   $(window).on('mousemove',cursormover);
   $('.menubar').hover(cursorhover,cursor);
   $('a').hover(cursorhover,cursor);
