@@ -212,5 +212,98 @@ $(function(){
   $('.menubar').hover(cursorhover,cursor);
   $('a').hover(cursorhover,cursor);
   $('.navigation-close').hover(cursorhover,cursor);
+  $('#theme-toggle').hover(cursorhover,cursor);
 
 })
+
+$(function(){
+  var storageKey = 'dilges-theme';
+  var cyberClass = 'theme-cyber';
+  var $body = $('body');
+  var $toggle = $('#theme-toggle');
+
+  function applyTheme(themeName){
+    var isCyber = themeName === 'cyber';
+    $body.toggleClass(cyberClass, isCyber);
+    $toggle.attr('aria-pressed', isCyber ? 'true' : 'false');
+  }
+
+  var savedTheme = null;
+  try {
+    savedTheme = localStorage.getItem(storageKey);
+  } catch (err) {
+    savedTheme = null;
+  }
+  applyTheme(savedTheme === 'cyber' ? 'cyber' : 'default');
+
+  $toggle.on('click', function(){
+    var nextTheme = $body.hasClass(cyberClass) ? 'default' : 'cyber';
+    applyTheme(nextTheme);
+    try {
+      localStorage.setItem(storageKey, nextTheme);
+    } catch (err) {
+      // Ignore storage errors in privacy-limited contexts.
+    }
+  });
+});
+
+$(function(){
+  var $heroName = $('#hero-name');
+  if(!$heroName.length){
+    return;
+  }
+
+  var targetName = String($heroName.data('name') || $heroName.text()).trim();
+  var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$%&*+-_=';
+
+  function randomChar(){
+    return randomChars[Math.floor(Math.random() * randomChars.length)];
+  }
+  function randomSeedFromName(){
+    var seed = '';
+    for(var i = 0; i < targetName.length; i++){
+      seed += targetName[i] === ' ' ? ' ' : randomChar();
+    }
+    return seed;
+  }
+
+  function scrambleToName(){
+    var frame = 0;
+    var totalFrames = Math.max(28, targetName.length * 3);
+    $heroName.removeClass('is-ready');
+
+    var timer = setInterval(function(){
+      var revealCount = Math.floor((frame / totalFrames) * targetName.length);
+      var nextText = '';
+
+      for(var i = 0; i < targetName.length; i++){
+        var currentChar = targetName[i];
+        if(currentChar === ' '){
+          nextText += ' ';
+        } else if(i < revealCount){
+          nextText += currentChar;
+        } else {
+          nextText += randomChar();
+        }
+      }
+
+      $heroName.text(nextText);
+      frame++;
+
+      if(frame > totalFrames){
+        clearInterval(timer);
+        $heroName.text(targetName);
+        $heroName.addClass('is-ready');
+      }
+    }, 42);
+  }
+
+  $heroName.text(randomSeedFromName());
+  $heroName.css('visibility', 'visible');
+
+  $(window).on('load', function(){
+    setTimeout(scrambleToName, 920);
+  });
+});
+
+
