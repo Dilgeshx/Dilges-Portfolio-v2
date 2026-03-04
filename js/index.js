@@ -288,17 +288,20 @@ $(function(){
       }
 
       $heroName.text(nextText);
+      $heroName.attr('data-text', nextText);
       frame++;
 
       if(frame > totalFrames){
         clearInterval(timer);
         $heroName.text(targetName);
+        $heroName.attr('data-text', targetName);
         $heroName.addClass('is-ready');
       }
     }, 42);
   }
 
   $heroName.text(randomSeedFromName());
+  $heroName.attr('data-text', $heroName.text());
   $heroName.css('visibility', 'visible');
 
   $(window).on('load', function(){
