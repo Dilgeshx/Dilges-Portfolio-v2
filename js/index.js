@@ -7,18 +7,6 @@ $(window).on('load',function(){
   gsap.to('#navigation-content',0,{display:"flex",delay:1});
 })
 $(function(){
-  $('.color-panel').on("click",function(e) {
-    e.preventDefault();
-    $('.color-changer').toggleClass('color-changer-active');
-});
-$('.colors a').on("click",function(e) {
-  e.preventDefault();
-  var attr = $(this).attr("title");
-  console.log(attr);
-  $('head').append('<link rel="stylesheet" href="css/'+attr+'.css">');
-});
-});
-$(function(){
      $('.menubar').on('click',function(){
          gsap.to('#navigation-content',.6,{y:0});
      })
@@ -243,14 +231,23 @@ $(function(){
 
 $(function(){
   var storageKey = 'dilges-theme';
-  var cyberClass = 'theme-cyber';
+  var themes = ['default', 'cyber', 'galaxy'];
+  var themeClasses = {
+    cyber: 'theme-cyber',
+    galaxy: 'theme-galaxy'
+  };
   var $body = $('body');
   var $toggle = $('#theme-toggle');
+  var activeTheme = 'default';
 
   function applyTheme(themeName){
-    var isCyber = themeName === 'cyber';
-    $body.toggleClass(cyberClass, isCyber);
-    $toggle.attr('aria-pressed', isCyber ? 'true' : 'false');
+    var nextTheme = themes.indexOf(themeName) >= 0 ? themeName : 'default';
+    activeTheme = nextTheme;
+    $body.removeClass(themeClasses.cyber + ' ' + themeClasses.galaxy);
+    if(nextTheme !== 'default'){
+      $body.addClass(themeClasses[nextTheme]);
+    }
+    $toggle.attr('aria-pressed', nextTheme !== 'default' ? 'true' : 'false');
   }
 
   var savedTheme = null;
@@ -259,10 +256,12 @@ $(function(){
   } catch (err) {
     savedTheme = null;
   }
-  applyTheme(savedTheme === 'cyber' ? 'cyber' : 'default');
+  applyTheme(savedTheme);
 
-  $toggle.on('click', function(){
-    var nextTheme = $body.hasClass(cyberClass) ? 'default' : 'cyber';
+  $toggle.on('click', function(e){
+    e.preventDefault();
+    var currentIndex = themes.indexOf(activeTheme);
+    var nextTheme = themes[(currentIndex + 1) % themes.length];
     applyTheme(nextTheme);
     try {
       localStorage.setItem(storageKey, nextTheme);
