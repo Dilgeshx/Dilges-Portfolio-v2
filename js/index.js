@@ -408,3 +408,29 @@ $(function(){
     }
   });
 });
+
+$(function(){
+  var $sticker = $('#intro-sticker');
+  var $avatar = $sticker.find('.intro-sticker-avatar');
+  var hideDelayMs = 5200;
+  var hideAnimMs = 620;
+  if(!$sticker.length){
+    return;
+  }
+
+  $avatar.on('error', function(){
+    $sticker.remove();
+  });
+
+  $(window).on('load', function(){
+    setTimeout(function(){
+      $sticker.addClass('is-visible');
+      setTimeout(function(){
+        $sticker.removeClass('is-visible').addClass('is-hidden');
+        setTimeout(function(){
+          $sticker.remove();
+        }, hideAnimMs);
+      }, hideDelayMs);
+    }, 1300);
+  });
+});
