@@ -3290,45 +3290,34 @@ body.theme-cyber .music-btn-main{
 }
 .intro-sticker-bubble{
     position: relative;
-    margin-top: 18px;
-    padding: 18px 26px;
-    border-radius: 24px 34px 18px 30px / 26px 22px 30px 18px;
-    background-color: #ffffff;
-    background-image: radial-gradient(rgba(0,0,0,.12) 1px, transparent 1px);
-    background-size: 8px 8px;
-    border: 4px solid #111111;
-    color: #111111;
-    font-family: "Bangers", "Comic Neue", "Comic Sans MS", cursive;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    transform: rotate(-1.2deg);
-    box-shadow: 6px 7px 0 #111111, 0 14px 24px rgba(0,0,0,.24);
+    margin-top: 24px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #ffffff, #ececec);
+    border: 2px solid #111111;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.1;
+    text-transform: lowercase;
+    letter-spacing: .25px;
+    transform: rotate(-1deg);
+    color: #0f0f0f;
+    box-shadow: 0 10px 20px rgba(0,0,0,.22);
+    text-shadow: none;
     white-space: nowrap;
 }
 .intro-sticker-bubble::before{
     content: "";
     position: absolute;
-    left: -18px;
-    top: 30px;
-    width: 0;
-    height: 0;
-    border-top: 13px solid transparent;
-    border-bottom: 13px solid transparent;
-    border-right: 20px solid #111111;
-}
-.intro-sticker-bubble::after{
-    content: "";
-    position: absolute;
-    left: -12px;
-    top: 32px;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 15px solid #ffffff;
+    left: -8px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+    background: #f5f5f5;
+    border-left: 2px solid #111111;
+    border-bottom: 2px solid #111111;
+    transform: rotate(45deg);
 }
 @keyframes stickerSlideIn{
     0%{
@@ -3370,8 +3359,10 @@ body.theme-cyber .music-btn-main{
     }
     .intro-sticker-bubble{
         margin-top: 10px;
-        padding: 10px 14px;
-        font-size: 20px;
+        padding: 8px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        letter-spacing: .2px;
     }
     .hero-portrait-frame{
         width: clamp(135px, 42vw, 185px);
