@@ -3203,6 +3203,7 @@ body.theme-cyber .top-nav a.active{
     right: 18px;
     bottom: 18px;
     z-index: 120;
+    pointer-events: none;
 }
 .music-shell{
     position: relative;
@@ -3218,6 +3219,7 @@ body.theme-cyber .top-nav a.active{
     box-shadow: 0 8px 20px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08);
     backdrop-filter: blur(10px) saturate(115%);
     overflow: hidden;
+    pointer-events: auto;
 }
 .music-shell::before,
 .music-shell::after{
@@ -3457,13 +3459,14 @@ body.theme-cyber .music-btn-main{
         margin: 5px;
     }
     .music-dock{
-        left: 10px;
+        left: 50%;
         right: auto;
-        bottom: 8px;
+        bottom: 72px;
+        transform: translateX(-50%);
     }
     .music-shell{
         min-width: 160px;
-        max-width: min(210px, calc(100vw - 20px));
+        max-width: min(210px, calc(100vw - 24px));
         gap: 7px;
         padding: 7px 9px 7px 7px;
     }
@@ -3607,13 +3610,14 @@ body.theme-cyber .music-btn-main{
         text-align: center;
     }
     .music-dock{
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
+        left: 50%;
+        right: auto;
+        bottom: 72px;
+        transform: translateX(-50%);
     }
     .music-shell{
-        width: 100%;
-        max-width: none;
+        width: auto;
+        max-width: min(240px, calc(100vw - 24px));
         min-width: 0;
     }
 }
@@ -3656,7 +3660,19 @@ body.theme-cyber .music-btn-main{
         max-width: 112px;
     }
     .intro-sticker{
-        display: none;
+        left: -8px;
+        bottom: 96px;
+        display: inline-flex;
+        z-index: 109;
+    }
+    .intro-sticker-avatar{
+        width: 128px;
+        height: 216px;
+    }
+    .intro-sticker-bubble{
+        margin-top: 8px;
+        padding: 7px 10px;
+        font-size: 11px;
     }
 }
 
