@@ -334,6 +334,39 @@ $(function(){
 });
 
 $(function(){
+  var $matrix = $('.hero-portrait-matrix');
+  if(!$matrix.length){
+    return;
+  }
+
+  var columnCount = 12;
+  var rowsPerColumn = 28;
+
+  function makeColumnText(){
+    var output = '';
+    for(var i = 0; i < rowsPerColumn; i++){
+      output += '<span>' + (Math.random() > 0.5 ? '1' : '0') + '</span>';
+    }
+    return output;
+  }
+
+  for(var col = 0; col < columnCount; col++){
+    var $col = $('<div class="hero-portrait-matrix-column" aria-hidden="true"></div>');
+    var left = 8 + (col * 7.3);
+    var duration = 8 + (col % 4) * 1.8 + (Math.random() * 1.5);
+    var delay = -1 * (Math.random() * 8);
+
+    $col.css({
+      left: left + '%',
+      animationDuration: duration + 's',
+      animationDelay: delay + 's'
+    });
+    $col.html(makeColumnText());
+    $matrix.append($col);
+  }
+});
+
+$(function(){
   var $dock = $('#music-dock');
   var $audio = $('#site-audio');
   var $cover = $('#music-cover');

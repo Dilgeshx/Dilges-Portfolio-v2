@@ -48,6 +48,7 @@ input[type=number] {
     --bg-cursor-x: 50%;
     --bg-cursor-y: 50%;
     --portrait-ring-rgb: 198,156,45;
+    --portrait-tint-rgb: 198,156,45;
   }
   #loader{
       display: flex;
@@ -366,6 +367,35 @@ body{
     overflow: hidden;
     transition: transform .24s ease, box-shadow .24s ease;
 }
+.hero-portrait-matrix{
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,.04) 0%, rgba(0,0,0,.28) 58%, rgba(0,0,0,.62) 100%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+}
+.hero-portrait-matrix-column{
+    position: absolute;
+    top: -55%;
+    width: 12px;
+    color: rgba(var(--portrait-ring-rgb), .28);
+    font-family: "Fira Code", Consolas, monospace;
+    font-size: 10px;
+    line-height: 10px;
+    letter-spacing: 0;
+    white-space: pre;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(var(--portrait-ring-rgb), .18);
+    opacity: .55;
+    animation: portraitMatrixFall linear infinite;
+}
+.hero-portrait-matrix-column span{
+    display: block;
+}
 .hero-portrait-frame::before{
     content: "";
     position: absolute;
@@ -373,16 +403,41 @@ body{
     background: conic-gradient(from 0deg, rgba(var(--portrait-ring-rgb),0) 0deg, rgba(var(--portrait-ring-rgb),.7) 100deg, rgba(var(--portrait-ring-rgb),0) 220deg);
     animation: portraitRingSpin 5.5s linear infinite;
     opacity: .9;
+    z-index: 0;
+}
+.hero-portrait-frame::after{
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 38%),
+      rgba(var(--portrait-tint-rgb), .28);
+    mix-blend-mode: color;
+    opacity: .72;
+    pointer-events: none;
+    z-index: 3;
 }
 .hero-portrait-img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: 52% 24%;
     border-radius: 50%;
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    filter: grayscale(1) contrast(1.08) brightness(.88);
+    opacity: .94;
+    transform: scale(1.08);
     transition: filter .35s ease, transform .35s ease;
+}
+@keyframes portraitMatrixFall{
+    from{
+        transform: translateY(-8%);
+    }
+    to{
+        transform: translateY(118%);
+    }
 }
 @keyframes portraitRingSpin{
     from{
@@ -2958,6 +3013,7 @@ form button,
 
 body.theme-galaxy{
     --portrait-ring-rgb: 190,159,255;
+    --portrait-tint-rgb: 170,150,220;
 }
 body.theme-galaxy,
 body.theme-galaxy #header,
@@ -3054,6 +3110,7 @@ body.theme-galaxy #navigation-bar .theme-toggle{
 
 body.theme-cyber{
     --portrait-ring-rgb: 0,194,255;
+    --portrait-tint-rgb: 108,144,156;
 }
 body.theme-cyber,
 body.theme-cyber #header,
