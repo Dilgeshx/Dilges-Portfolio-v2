@@ -3525,6 +3525,22 @@ body.theme-cyber .music-btn-main{
         font-size: clamp(2.3rem, 11vw, 3.9rem);
         line-height: 1.05;
     }
+    .hero-portrait-frame{
+        isolation: isolate;
+    }
+    .hero-portrait-matrix{
+        inset: 6px;
+    }
+    .hero-portrait-img{
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        clip-path: circle(50% at 50% 50%);
+        object-fit: cover;
+        object-position: center 24%;
+        transform: scale(1.02);
+    }
     .hero-name{
         white-space: normal;
     }
@@ -3638,6 +3654,14 @@ body.theme-cyber .music-btn-main{
     }
     .hero-portrait-frame{
         width: min(170px, 46vw);
+        padding: 5px;
+    }
+    .hero-portrait-matrix{
+        inset: 5px;
+    }
+    .hero-portrait-img{
+        object-position: center 22%;
+        transform: scale(1);
     }
     #header .header-content .terminal-line,
     #header .header-content .secondline{
