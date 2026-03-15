@@ -352,61 +352,8 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    position: relative;
     gap: 10px;
     margin-bottom: 16px;
-    isolation: isolate;
-}
-.hero-portrait-orbit{
-    position: absolute;
-    width: clamp(196px, 27vw, 296px);
-    aspect-ratio: 1 / 1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 1;
-}
-.hero-portrait-orbit-label{
-    position: absolute;
-    top: calc(50% - clamp(98px, 13.5vw, 148px) + 8px);
-    left: calc(50% - clamp(98px, 13.5vw, 148px) + 22px);
-    color: rgba(var(--portrait-ring-rgb), .92);
-    font-family: "Fira Code", Consolas, monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .34em;
-    text-shadow: 0 0 10px rgba(var(--portrait-ring-rgb), .32);
-    transform: rotate(-12deg);
-    pointer-events: none;
-    z-index: 1;
-}
-.hero-portrait-orbit-rotor{
-    position: absolute;
-    inset: 0;
-    animation: portraitOrbitSpin 9s linear infinite;
-}
-.hero-portrait-orbit-ring{
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 2px solid rgba(var(--portrait-ring-rgb), .28);
-    box-shadow:
-      0 0 0 1px rgba(var(--portrait-ring-rgb), .08) inset,
-      0 0 22px rgba(var(--portrait-ring-rgb), .12);
-    -webkit-mask: conic-gradient(from 0deg, transparent 0 10%, rgba(0,0,0,1) 10% 68%, transparent 68% 100%);
-    mask: conic-gradient(from 0deg, transparent 0 10%, rgba(0,0,0,1) 10% 68%, transparent 68% 100%);
-}
-.hero-portrait-orbit-dot{
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    margin-left: -5px;
-    border-radius: 50%;
-    background: rgb(var(--portrait-ring-rgb));
-    box-shadow: 0 0 14px rgba(var(--portrait-ring-rgb), .72), 0 0 28px rgba(var(--portrait-ring-rgb), .32);
 }
 .hero-portrait-frame{
     width: clamp(170px, 24vw, 260px);
@@ -491,14 +438,6 @@ body{
     }
     to{
         transform: translateY(118%);
-    }
-}
-@keyframes portraitOrbitSpin{
-    from{
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to{
-        transform: translate(-50%, -50%) rotate(360deg);
     }
 }
 @keyframes portraitRingSpin{
@@ -3547,6 +3486,177 @@ body.theme-cyber .music-btn-main{
         font-size: 15px;
         padding: 8px 10px;
         gap: 3px;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    #navigation-bar{
+        height: 84px;
+        padding: 10px 12px;
+    }
+    #navigation-bar .theme-toggle{
+        top: 12px;
+        left: 12px;
+    }
+    #navigation-bar .theme-toggle img{
+        height: 58px;
+    }
+    .top-nav{
+        top: 16px;
+        max-width: calc(100vw - 96px);
+    }
+    #header{
+        min-height: 100svh;
+        height: auto;
+    }
+    .header-content{
+        position: relative;
+        min-height: 100svh;
+        padding: 96px 16px 96px;
+    }
+    .header-content-box{
+        width: min(100%, 34rem);
+        padding-right: 0;
+    }
+    .header-content .firstline{
+        font-size: clamp(2.3rem, 11vw, 3.9rem);
+        line-height: 1.05;
+    }
+    .hero-name{
+        white-space: normal;
+    }
+    #header .header-content .terminal-line,
+    #header .header-content .secondline{
+        width: min(100%, 30rem);
+        margin-top: 14px;
+        white-space: normal;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+    #header .header-content .terminal-line .txt-rotate,
+    #header .header-content .terminal-line .txt-rotate .wrap{
+        white-space: normal;
+    }
+    .social-media-links{
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 12px;
+        height: auto;
+        padding: 10px 14px;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .contact{
+        display: none;
+    }
+    #about-content{
+        padding: 24px 16px;
+    }
+    .about-main{
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        flex-direction: column;
+    }
+    .about-first-paragraph{
+        width: min(100%, 42rem);
+        padding: 10px 0 0;
+        font-size: 18px;
+    }
+    .about-first-line{
+        font-size: clamp(1.9rem, 8vw, 2.4rem);
+    }
+    .about-second-line{
+        font-size: 16px;
+        line-height: 1.7;
+    }
+    .services-content{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 12px 16px 0;
+    }
+    .service{
+        width: 100%;
+        height: auto;
+        margin: 0;
+        display: block;
+    }
+    .service-description{
+        display: block;
+        width: 100%;
+        padding-bottom: 24px;
+    }
+    .skill-html{
+        width: 100%;
+        display: block;
+        padding: 10px 0;
+    }
+    .skill-text{
+        width: 100%;
+    }
+    .html-prog{
+        width: 100%;
+    }
+    .footer{
+        padding: 0 16px 28px;
+    }
+    .footer .footer-text{
+        text-align: center;
+    }
+    .music-dock{
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+    .music-shell{
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .top-nav{
+        left: auto;
+        right: 12px;
+        transform: none;
+        max-width: calc(100vw - 86px);
+    }
+    .top-nav a{
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+    .header-content{
+        padding: 92px 14px 88px;
+    }
+    .hero-portrait-frame{
+        width: min(170px, 46vw);
+    }
+    #header .header-content .terminal-line,
+    #header .header-content .secondline{
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .about-header,
+    .services-heading,
+    .skills-header{
+        font-size: 34px;
+    }
+    .service-description h2{
+        font-size: 24px;
+    }
+    .service-description p{
+        font-size: 15px;
+        line-height: 1.7;
+    }
+    .music-now-title{
+        max-width: 112px;
+    }
+    .intro-sticker{
+        display: none;
     }
 }
 
