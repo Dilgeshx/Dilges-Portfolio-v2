@@ -3220,6 +3220,9 @@ body.theme-cyber .top-nav a.active{
     backdrop-filter: blur(10px) saturate(115%);
     overflow: hidden;
     pointer-events: auto;
+    transform-origin: right bottom;
+    transition: min-width .45s ease, max-width .45s ease, padding .45s ease, gap .45s ease, border-radius .45s ease, background .45s ease, box-shadow .45s ease, transform .45s ease;
+    will-change: transform;
 }
 .music-shell::before,
 .music-shell::after{
@@ -3249,6 +3252,8 @@ body.theme-cyber .top-nav a.active{
     object-fit: cover;
     border: 1px solid rgba(255,255,255,.28);
     box-shadow: 0 0 0 2px rgba(255,255,255,.06);
+    flex: 0 0 48px;
+    transition: width .45s ease, height .45s ease, flex-basis .45s ease, transform .45s ease, border-radius .45s ease;
 }
 .music-dock.playing .music-cover{
     animation: spinCover 6.6s linear infinite;
@@ -3262,6 +3267,7 @@ body.theme-cyber .top-nav a.active{
     font-size: 11px;
     color: rgba(255,255,255,.84);
     opacity: .9;
+    transition: opacity .3s ease, transform .3s ease;
 }
 .music-now-title{
     font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
@@ -3271,6 +3277,11 @@ body.theme-cyber .top-nav a.active{
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 150px;
+    transition: opacity .3s ease, transform .3s ease, max-width .4s ease;
+}
+.music-meta{
+    min-width: 0;
+    transition: opacity .3s ease, transform .3s ease, max-width .4s ease, margin .4s ease;
 }
 .music-btn{
     width: 34px;
@@ -3280,10 +3291,69 @@ body.theme-cyber .top-nav a.active{
     background: rgba(255,255,255,.06);
     color: #fff;
     cursor: pointer;
+    transition: opacity .3s ease, transform .3s ease, width .35s ease, margin .35s ease;
 }
 .music-btn-main{
     margin-left: auto;
     color: #C69C2D;
+}
+.music-dock.is-collapsed .music-shell{
+    min-width: 64px;
+    width: 64px;
+    max-width: 64px;
+    height: 64px;
+    padding: 6px;
+    gap: 0;
+    border-radius: 50%;
+    transform: scale(1);
+    justify-content: center;
+}
+.music-dock.is-collapsed .music-shell::before,
+.music-dock.is-collapsed .music-shell::after{
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+.music-dock.is-collapsed .music-cover{
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+}
+.music-dock.is-collapsed .music-meta{
+    opacity: 0;
+    transform: translateX(10px);
+    max-width: 0;
+    margin: 0;
+    pointer-events: none;
+}
+.music-dock.is-collapsed .music-now-label,
+.music-dock.is-collapsed .music-now-title{
+    opacity: 0;
+    transform: translateX(10px);
+    max-width: 0;
+}
+.music-dock.is-collapsed .music-btn{
+    width: 0;
+    opacity: 0;
+    transform: translateX(10px);
+    margin-left: 0;
+    border-width: 0;
+    pointer-events: none;
+}
+.music-dock.is-expanded .music-shell{
+    transform: scale(1);
+}
+.music-dock.is-booting .music-shell{
+    animation: musicDockIntro .65s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes musicDockIntro{
+    from{
+        opacity: 0;
+        transform: translateY(18px) scale(.92);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 body.theme-galaxy .music-shell{
     border-color: rgba(171,134,255,.42);
@@ -3470,9 +3540,22 @@ body.theme-cyber .music-btn-main{
         gap: 7px;
         padding: 7px 9px 7px 7px;
     }
+    .music-dock.is-collapsed .music-shell{
+        min-width: 56px;
+        width: 56px;
+        max-width: 56px;
+        height: 56px;
+        padding: 5px;
+        border-radius: 50%;
+    }
     .music-cover{
         width: 40px;
         height: 40px;
+    }
+    .music-dock.is-collapsed .music-cover{
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
     }
     .music-now-title{
         max-width: 90px;
@@ -3527,19 +3610,26 @@ body.theme-cyber .music-btn-main{
     }
     .hero-portrait-frame{
         isolation: isolate;
+        display: block;
+        padding: 6px;
     }
     .hero-portrait-matrix{
         inset: 6px;
+        z-index: 1;
     }
     .hero-portrait-img{
+        position: absolute;
+        inset: 6px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
         display: block;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        clip-path: circle(50% at 50% 50%);
+        border-radius: 999px;
         object-fit: cover;
         object-position: center 24%;
-        transform: scale(1.02);
+        clip-path: none;
+        overflow: hidden;
+        z-index: 2;
+        transform: none;
     }
     .hero-name{
         white-space: normal;
@@ -3660,8 +3750,12 @@ body.theme-cyber .music-btn-main{
         inset: 5px;
     }
     .hero-portrait-img{
+        inset: 5px;
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
         object-position: center 22%;
-        transform: scale(1);
+        border-radius: 999px;
+        transform: none;
     }
     #header .header-content .terminal-line,
     #header .header-content .secondline{

@@ -368,11 +368,12 @@ $(function(){
 
 $(function(){
   var $dock = $('#music-dock');
+  var $shell = $dock.find('.music-shell');
   var $audio = $('#site-audio');
   var $cover = $('#music-cover');
   var $title = $('#music-now-title');
   var $play = $('#music-play');
-  if(!$dock.length || !$audio.length || !$play.length){
+  if(!$dock.length || !$shell.length || !$audio.length || !$play.length){
     return;
   }
   if(!$dock.parent().is('body')){
@@ -386,6 +387,28 @@ $(function(){
   var defaultVolume = 0.22;
   var current = 0;
   var unlocked = false;
+  var introExpandedMs = 3400;
+  var idleCollapseMs = 3800;
+  var collapseTimer = null;
+
+  function clearCollapseTimer(){
+    if(collapseTimer){
+      clearTimeout(collapseTimer);
+      collapseTimer = null;
+    }
+  }
+  function collapseDock(){
+    clearCollapseTimer();
+    $dock.addClass('is-collapsed').removeClass('is-expanded');
+  }
+  function queueAutoCollapse(delay){
+    clearCollapseTimer();
+    collapseTimer = setTimeout(collapseDock, delay || idleCollapseMs);
+  }
+  function expandDock(delay){
+    $dock.addClass('is-expanded').removeClass('is-collapsed');
+    queueAutoCollapse(delay);
+  }
 
   function syncState(){
     $play.text($audio[0].paused ? '>' : '||');
@@ -413,19 +436,36 @@ $(function(){
   loadTrack(0);
   $audio[0].volume = defaultVolume;
   syncState();
+  $dock.addClass('is-expanded is-booting').removeClass('is-collapsed');
 
   $play.on('click', function(){
+    expandDock();
     if($audio[0].paused){
       tryPlay();
     }else{
       $audio[0].pause();
     }
   });
+  $shell.on('click', function(event){
+    if($(event.target).closest('#music-play').length){
+      return;
+    }
+    expandDock();
+  });
   $audio.on('ended', function(){
     loadTrack(current + 1);
     tryPlay();
   });
   $audio.on('play pause', syncState);
+
+  $dock.on('pointerenter', function(){
+    clearCollapseTimer();
+  });
+  $dock.on('pointerleave', function(){
+    if($dock.hasClass('is-expanded')){
+      queueAutoCollapse(1600);
+    }
+  });
 
   $play.hover(
     function(){ gsap.to($('.cursor'), { scale: 1.25, opacity: 1 }); },
@@ -434,6 +474,10 @@ $(function(){
 
   $(window).on('load', function(){
     setTimeout(tryPlay, 450);
+    setTimeout(function(){
+      $dock.removeClass('is-booting');
+      collapseDock();
+    }, introExpandedMs);
   });
   $(document).one('pointerdown keydown touchstart', function(){
     if(!unlocked && $audio[0].paused){
